@@ -45,7 +45,7 @@ body {
 }
 
 #nav-title {
-    font-size: 4rem;
+    font-size: 3rem;
     background-color: var(--bg-color);
     border-radius: 0.4rem;
     border: 0.1rem solid var(--border-color);
@@ -78,6 +78,7 @@ body {
 }
 
 #form-error-text {
+  display: none;
   text-align: start;
   color: #be1515;
   padding: 0.2rem;
@@ -91,6 +92,14 @@ body {
   width: 16rem;
   height: 1rem;
   cursor: pointer;
+}
+/* Estilos para el input */
+.input-valid {
+  outline: 1px solid green;
+}
+
+.input-invalid {
+  outline : 1px solid red;
 }
 
 #form-btn svg {

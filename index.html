@@ -16,13 +16,13 @@
           <div class="form-input-container">
             <label for="form-input-name">Nombre:</label>
             <input type="text" id="form-input-name" name="form-input-name" placeholder="Eloy Rodríguez"
-              autocomplete="off" required pattern="[A-Z][a-z]+ [A-Z][a-z]+">
+              autocomplete="on">
             <p id="form-error-text">Debe ingresar nombre y apellido</p>
             <p id="form-error-text">Debe ingresar iniciales en mayúsculas</p>
             <label for="form-input-number">Número:</label>
             <input type="text" id="form-input-number" name="form-input-number" placeholder="0412-9876543"
-              autocomplete="off" required pattern="\d{4}-\d{7}">
-            <p id="form-error-text">Debe ser en formato 0000-0000000</p>
+              autocomplete="on">
+            <p id="form-error-text">Debe ser un número venezolano válido</p>
           </div>
           <button type="submit" id="form-btn">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
@@ -185,5 +185,6 @@
             </li>
         </ul>
       </main>
+      <script src="index.js"></script>
 </body>
 </html>
