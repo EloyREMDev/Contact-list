@@ -125,34 +125,55 @@ function renderContacts() {
       </svg>
     `;
 
-    // Editar contacto en la lista
     editButton.addEventListener('click', () => {
       if (!editButton.classList.contains('editing')) {
-        contactName.readOnly = false;
-        contactNumber.readOnly = false;
-        contactName.focus();
-        editButton.classList.add('editing');
-        editButton.innerHTML = `
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
-            <path fill-rule="evenodd" d="M11.013 2.513a1.75 1.75 0 0 1 2.475 2.474L6.226 12.25a2.751 2.751 0 0 1-.892.596l-2.047.848a.75.75 0 0 1-.98-.98l.848-2.047a2.75 2.75 0 0 1 .596-.892l7.262-7.261Z" clip-rule="evenodd" />
-          </svg>
-        `;
+          contactName.readOnly = false;
+          contactNumber.readOnly = false;
+          contactName.focus();
+          editButton.classList.add('editing');
+          editButton.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+              <path fill-rule="evenodd" d="M11.013 2.513a1.75 1.75 0 0 1 2.475 2.474L6.226 12.25a2.751 2.751 0 0 1-.892.596l-2.047.848a.75.75 0 0 1-.98-.98l.848-2.047a2.75 2.75 0 0 1 .596-.892l7.262-7.261Z" clip-rule="evenodd" />
+            </svg>
+          `;
       } else {
-        contactName.readOnly = true;
-        contactNumber.readOnly = true;
-        editButton.classList.remove('editing');
-        editButton.innerHTML = `
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
-            <path d="M13.488 2.513a1.75 1.75 0 0 0-2.475 0L6.75 6.774a2.75 2.75 0 0 0-.596.892l-.848 2.047a.75.75 0 0 0 .98.98l2.047-.848a2.75 2.75 0 0 0 .892-.596l4.261-4.262a1.75 1.75 0 0 0 0-2.474Z" />
-            <path d="M4.75 3.5c-.69 0-1.25.56-1.25 1.25v6.5c0 .69.56 1.25 1.25 1.25h6.5c.69 0 1.25-.56 1.25-1.25V9A.75.75 0 0 1 14 9v2.25A2.75 2.75 0 0 1 11.25 14h-6.5A2.75 2.75 0 0 1 2 11.25v-6.5A2.75 2.75 0 0 1 4.75 2H7a.75.75 0 0 1 0 1.5H4.75Z" />
-          </svg>
-        `;
-        // Actualizar contacto en la lista
-        contacts[index].name = contactName.value;
-        contacts[index].phone = contactNumber.value;
-        saveContactsToStorage();
+          const isValid = validateEditContact(contactName.value, contactNumber.value);
+          if (!isValid) {
+              alert("Por favor corrige los errores antes de guardar.");
+              return;
+          }
+          contactName.readOnly = true;
+          contactNumber.readOnly = true;
+          editButton.classList.remove('editing');
+          editButton.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+              <path d="M13.488 2.513a1.75 1.75 0 0 0-2.475 0L6.75 6.774a2.75 2.75 0 0 0-.596.892l-.848 2.047a.75.75 0 0 0 .98.98l2.047-.848a2.75 2.75 0 0 0 .892-.596l4.261-4.262a1.75 1.75 0 0 0 0-2.474Z" />
+              <path d="M4.75 3.5c-.69 0-1.25.56-1.25 1.25v6.5c0 .69.56 1.25 1.25 1.25h6.5c.69 0 1.25-.56 1.25-1.25V9A.75.75 0 0 1 14 9v2.25A2.75 2.75 0 0 1 11.25 14h-6.5A2.75 2.75 0 0 1 2 11.25v-6.5A2.75 2.75 0 0 1 4.75 2H7a.75.75 0 0 1 0 1.5H4.75Z" />
+            </svg>
+          `;
+          // Actualizar contacto en la lista
+          contacts[index].name = contactName.value;
+          contacts[index].phone = contactNumber.value;
+          saveContactsToStorage();
       }
-    });
+  });
+  
+    //Funcion para validar despues del editado
+    function validateEditContact(contactName, contactNumber) {
+      const NAME_REGEX = /^[A-Z][a-z]*[ ][A-Z][a-z]{3,}[ ]{0,1}$/; 
+      const PHONE_REGEX = /^[0](412|424|414|426|416|212)[0-9]{7}$/; 
+
+      if (!NAME_REGEX.test(contactName)) {
+        alert("El nombre es invalido");
+        return false;
+      }
+      if (!PHONE_REGEX.test(contactNumber)) {
+        alert ("El numero es invalido");
+        return false;
+      }
+      return true;
+    }
+  ;
 
     // Botón para eliminar contacto
     const deleteButton = document.createElement('button');
